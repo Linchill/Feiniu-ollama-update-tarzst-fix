@@ -3,7 +3,7 @@
 set -e
 set -o pipefail
 
-echo "🔄 Ollama 升级脚本 for FnOS, 脚本v2.1.2"
+echo "🔄 Ollama 升级脚本 for FnOS, 脚本v2.1.3"
 
 # 1. 查找 Ollama 安装路径
 echo "🔍 查找 Ollama 安装路径..."
@@ -67,7 +67,11 @@ fi
 FILENAME="ollama-linux-amd64.tar.zst"
 echo "🌐 获取 Ollama 最新版本号..."
 
-LATEST_TAG=$(curl -s https://github.com/ollama/ollama/releases | grep -oP '/ollama/ollama/releases/tag/\K[^"]+' | head -n 1)
+LATEST_TAG=$(curl -s https://github.com/ollama/ollama/releases \
+  | grep -oP '/ollama/ollama/releases/tag/\K[^"]+' \
+  | head -n 1 \
+  | tr -d '\r\n\t ')
+
 
 if [ -z "$LATEST_TAG" ]; then
     echo "❌ 无法从 GitHub 获取 Ollama 最新版本号，请检查网络连接或代理设置"
