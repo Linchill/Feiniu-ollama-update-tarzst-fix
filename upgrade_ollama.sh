@@ -3,7 +3,7 @@
 set -e
 set -o pipefail
 
-echo "🔄 Ollama 升级脚本 for FnOS, 脚本v2.1.3"
+echo "🔄 Ollama 升级脚本 for FnOS, 脚本v2.1.5，修复后缀、aria2c报错、LATEST_TAG 脏值"
 
 # 1. 查找 Ollama 安装路径
 echo "🔍 查找 Ollama 安装路径..."
@@ -106,6 +106,7 @@ fi
 # 如果文件不存在才开始下载
 if [ ! -f "$FILENAME" ]; then
     echo "⬇️ 正在下载版本 $LATEST_TAG ..."
+    echo "DEBUG: URL=[$URL]"
     if command -v aria2c >/dev/null 2>&1; then
         echo "🚀 使用 aria2c 多线程下载..."
         aria2c -x 16 -s 16 -k 1M -o "$FILENAME" "$URL"
